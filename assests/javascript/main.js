@@ -31,7 +31,6 @@ function newGame(){
         playerTwo: "",
         p1Record: [0,0],
         p2Record: [0,0],
-        password: "",
         gameChoices: ["",""]
     }
 
@@ -97,8 +96,9 @@ function winner(player, gameObj){
         loser = gameObj.playerTwo;
         wp = p1C;
         lp = p2C;
-        gameObj.p1Record[0]++;
+        gameObj.p1Record[0]++;        
         gameObj.p2Record[1]++;
+        
     }else if(player === "Player 2"){
         loser = gameObj.playerOne;
         winner = gameObj.playerTwo; 
@@ -107,6 +107,8 @@ function winner(player, gameObj){
         gameObj.p1Record[1]++;
         gameObj.p2Record[0]++;
     }
+    database.ref('gameObj/data/p1Record').set(gameObj.p1Record);
+    database.ref('gameObj/data/p2Record').set(gameObj.p2Record);
     gameCol.append(`<h2>${winner} Wins!</h2>`);
     gameCol.append(`<h2>${winner} played: ${wp}</h2>`);
     gameCol.append(`<h2>${loser} played: ${lp}</h2>`);
