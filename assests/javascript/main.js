@@ -1,11 +1,11 @@
 var config = {
-    apiKey: "AIzaSyAJHPymN8hOxLQk11A_2YLrC4nY3zx-yvs",
-    authDomain: "inclass-fb.firebaseapp.com",
-    databaseURL: "https://inclass-fb.firebaseio.com",
-    projectId: "inclass-fb",
-    storageBucket: "inclass-fb.appspot.com",
-    messagingSenderId: "341334549143"
-};
+    apiKey: "AIzaSyD75BTPNKg8RNN7i_l1vnFWlumbSi5p8f0",
+    authDomain: "rps-game-38e23.firebaseapp.com",
+    databaseURL: "https://rps-game-38e23.firebaseio.com",
+    projectId: "rps-game-38e23",
+    storageBucket: "",
+    messagingSenderId: "107015449294"
+  };
 
 firebase.initializeApp(config);
 var database = firebase.database();
@@ -24,6 +24,7 @@ $('#newGame').click(()=>{
 // });
 
 function newGame(){
+    gameCol.empty();
     var newGameObj = {
         gameName: "",
         playerOne: "",
@@ -40,9 +41,9 @@ function newGame(){
     nameInputDiv.append('<h3>Player 1 Name:</h3>');
     nameInputDiv.append('<input id="p1Name" type="text"></input>');
     nameInputDiv.append('<h3>Player 2 Name:</h3>');
-    nameInputDiv.append('<input id="p2Name" type="text"></input> <br>');
+    nameInputDiv.append('<input id="p2Name" type="text"></input>');
     nameInputDiv.append('<h3>Game Password:</h3>');
-    nameInputDiv.append('<input id="pWord" type="text"></input>');
+    nameInputDiv.append('<input id="pWord" type="text"></input> <br>');
     nameInputDiv.append('<button id="nameSubmit" class="btn btn-primary">Start</button>');
     gameCol.append(nameInputDiv);
 
@@ -58,7 +59,12 @@ function newGame(){
             newGameObj.playerOne = p1; 
             newGameObj.playerTwo = p2; 
             newGameObj.pWord = pWord;
-            //push game to firebase
+            database.ref().set({  
+                gameObj:{
+                    name: newGameObj.gameName,
+                    data: newGameObj,
+                }
+            })
             startGame(newGameObj);            
         } 
     });
